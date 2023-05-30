@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Uploading</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet' href='https://vjs.zencdn.net/5-unsafe/video-js.css'><link rel="stylesheet" href="./style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap');
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+*{
+    box-sizing: border-box;
+}
+svg:not(:root) {
+    overflow: hidden;
+}
+.main-wrapper {
+    max-width: 1170px;
+    margin: 0 auto;
+    text-align: center;
+}
+.upload-main-wrapper{
+    width: 220px;
+    margin: 0 auto;
+}
+#file-upload-name{
+    margin: 4px 0 0 0;
+    font-size: 12px;
+}
+.upload-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 40px auto 0;
+    position: relative;
+    cursor: pointer;
+    background-color: #bcaef5;
+    padding: 8px 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: 0.2s linear all;
+    color: #ffffff;
+}
+.upload-wrapper input[type="file"] {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    top: 0;
+    bottom: 0;
+    cursor: pointer;
+    z-index: 1;
+}
+.upload-wrapper > svg {
+    width: 50px;
+    height: auto;
+    cursor: pointer;
+}
+.upload-wrapper.success > svg{
+    transform: translateX(-200px);
+}
+.upload-wrapper.uploaded {
+    transition: 0.2s linear all;
+    width: 60px;
+    border-radius: 50%;
+    height: 60px;
+    text-align: center;
+}
+.upload-wrapper .file-upload-text {
+    position: absolute;
+    left: 80px;
+    opacity: 1;
+    visibility: visible;
+    transition: 0.2s linear all;
+}
+.upload-wrapper.uploaded .file-upload-text {
+    text-indent: -999px;
+    margin: 0;
+}
+.file-success-text {
+    opacity: 0;
+    transition: 0.2s linear all;
+    visibility: hidden;
+    transform: translateX(200px);
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.file-success-text svg {
+    width: 25px;
+    height: auto;
+}
+.file-success-text span{
+   margin-left: 15px;
+}
+.upload-wrapper.success .file-success-text{
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+}
+.upload-wrapper.success.uploaded .file-success-text{
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+}
+.upload-wrapper.success.uploaded .file-success-text span{
+    display: none;
+}
+.upload-wrapper .file-success-text circle{
+    stroke-dasharray: 380;
+    stroke-dashoffset: 380;
+    transition: 1s linear all;
+    transition-delay: 1.4s;
+}
+.upload-wrapper.success .file-success-text  circle {
+  stroke-dashoffset: 0;
+}
+.upload-wrapper .file-success-text polyline {
+  stroke-dasharray: 380;
+  stroke-dashoffset: 380;
+  transition: 1s linear all;
+  transition-delay: 2s;
+}
+.upload-wrapper.success .file-success-text polyline {
+    stroke-dashoffset: 0;
+}
+.upload-wrapper.success .file-upload-text{
+    -webkit-animation-name: bounceOutLeft;
+    animation-name: bounceOutLeft;
+    -webkit-animation-duration: 0.2s;
+    animation-duration: 0.2s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+@-webkit-keyframes bounceOutLeft {
+    20% {
+        opacity: 1;
+        -webkit-transform: translate3d(20px, 0, 0);
+        transform: translate3d(20px, 0, 0);
+    }
+
+    to {
+        opacity: 0;
+        -webkit-transform: translate3d(-2000px, 0, 0);
+        transform: translate3d(-2000px, 0, 0);
+    }
+}
+
+@keyframes bounceOutLeft {
+    20% {
+        opacity: 1;
+        -webkit-transform: translate3d(20px, 0, 0);
+        transform: translate3d(20px, 0, 0);
+    }
+
+    to {
+        opacity: 0;
+        -webkit-transform: translate3d(-2000px, 0, 0);
+        transform: translate3d(-2000px, 0, 0);
+    }
+}
+</style>
+<body>
+    <div class="container">
+        <div class="sidebar">
+         <span class="logo"></span>
+         <a class="logo-expand" href="#">PMPL-Artikel</a>
+         <div class="side-wrapper">
+          <div class="side-title">Menu</div>
+          <div class="side-menu">
+           <a class="sidebar-link discover is-active" href="index.html">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+             <path d="M9.135 20.773v-3.057c0-.78.637-1.414 1.423-1.414h2.875c.377 0 .74.15 1.006.414.267.265.417.625.417 1v3.057c-.002.325.126.637.356.867.23.23.544.36.87.36h1.962a3.46 3.46 0 002.443-1 3.41 3.41 0 001.013-2.422V9.867c0-.735-.328-1.431-.895-1.902l-6.671-5.29a3.097 3.097 0 00-3.949.072L3.467 7.965A2.474 2.474 0 002.5 9.867v8.702C2.5 20.464 4.047 22 5.956 22h1.916c.68 0 1.231-.544 1.236-1.218l.027-.009z" />
+            </svg>
+            Rumah
+           </a>
+           <a class="sidebar-link" href="tentangsaya.html">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+             <path fill-rule="evenodd" clip-rule="evenodd" d="M12.1535 16.64L14.995 13.77C15.2822 13.47 15.2822 13 14.9851 12.71C14.698 12.42 14.2327 12.42 13.9455 12.71L12.3713 14.31V9.49C12.3713 9.07 12.0446 8.74 11.6386 8.74C11.2327 8.74 10.896 9.07 10.896 9.49V14.31L9.32178 12.71C9.03465 12.42 8.56931 12.42 8.28218 12.71C7.99505 13 7.99505 13.47 8.28218 13.77L11.1139 16.64C11.1832 16.71 11.2624 16.76 11.3515 16.8C11.4406 16.84 11.5396 16.86 11.6386 16.86C11.7376 16.86 11.8267 16.84 11.9158 16.8C12.005 16.76 12.0842 16.71 12.1535 16.64ZM19.3282 9.02561C19.5609 9.02292 19.8143 9.02 20.0446 9.02C20.302 9.02 20.5 9.22 20.5 9.47V17.51C20.5 19.99 18.5 22 16.0446 22H8.17327C5.58911 22 3.5 19.89 3.5 17.29V6.51C3.5 4.03 5.4901 2 7.96535 2H13.2525C13.5 2 13.7079 2.21 13.7079 2.46V5.68C13.7079 7.51 15.1931 9.01 17.0149 9.02C17.4333 9.02 17.8077 9.02318 18.1346 9.02595C18.3878 9.02809 18.6125 9.03 18.8069 9.03C18.9479 9.03 19.1306 9.02789 19.3282 9.02561ZM19.6045 7.5661C18.7916 7.5691 17.8322 7.5661 17.1421 7.5591C16.047 7.5591 15.145 6.6481 15.145 5.5421V2.9061C15.145 2.4751 15.6629 2.2611 15.9579 2.5721C16.7203 3.37199 17.8873 4.5978 18.8738 5.63395C19.2735 6.05379 19.6436 6.44249 19.945 6.7591C20.2342 7.0621 20.0223 7.5651 19.6045 7.5661Z" />
+            </svg>
+            Tentang Saya
+           </a>
+           <a class="sidebar-link" href="uploading.html">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+             <path fill-rule="evenodd" clip-rule="evenodd" d="M12.1535 16.64L14.995 13.77C15.2822 13.47 15.2822 13 14.9851 12.71C14.698 12.42 14.2327 12.42 13.9455 12.71L12.3713 14.31V9.49C12.3713 9.07 12.0446 8.74 11.6386 8.74C11.2327 8.74 10.896 9.07 10.896 9.49V14.31L9.32178 12.71C9.03465 12.42 8.56931 12.42 8.28218 12.71C7.99505 13 7.99505 13.47 8.28218 13.77L11.1139 16.64C11.1832 16.71 11.2624 16.76 11.3515 16.8C11.4406 16.84 11.5396 16.86 11.6386 16.86C11.7376 16.86 11.8267 16.84 11.9158 16.8C12.005 16.76 12.0842 16.71 12.1535 16.64ZM19.3282 9.02561C19.5609 9.02292 19.8143 9.02 20.0446 9.02C20.302 9.02 20.5 9.22 20.5 9.47V17.51C20.5 19.99 18.5 22 16.0446 22H8.17327C5.58911 22 3.5 19.89 3.5 17.29V6.51C3.5 4.03 5.4901 2 7.96535 2H13.2525C13.5 2 13.7079 2.21 13.7079 2.46V5.68C13.7079 7.51 15.1931 9.01 17.0149 9.02C17.4333 9.02 17.8077 9.02318 18.1346 9.02595C18.3878 9.02809 18.6125 9.03 18.8069 9.03C18.9479 9.03 19.1306 9.02789 19.3282 9.02561ZM19.6045 7.5661C18.7916 7.5691 17.8322 7.5661 17.1421 7.5591C16.047 7.5591 15.145 6.6481 15.145 5.5421V2.9061C15.145 2.4751 15.6629 2.2611 15.9579 2.5721C16.7203 3.37199 17.8873 4.5978 18.8738 5.63395C19.2735 6.05379 19.6436 6.44249 19.945 6.7591C20.2342 7.0621 20.0223 7.5651 19.6045 7.5661Z" />
+            </svg>
+            Upload Artikel
+           </a>
+          </div>
+         </div>
+         <div class="side-wrapper">
+          <div class="side-title">Artikel Saya</div>
+          <div class="side-menu">
+           <a class="sidebar-link" href="artikel1.html">
+            Tujuan pengujian dalam proses pengembangan perangkat lunak
+           </a>
+           <a class="sidebar-link" href="artikel2.html">
+            Batasan pengujian perangkat lunak
+           </a>
+           <a class="sidebar-link" href="artikel3.html">
+           Pengujian perangkat lunak dalam ruang lingkup  SDLC pengembangan perangkat lunak
+           </a>
+          </div>
+         </div>
+        </div>
+        <style>
+            .artikel-1{
+                width: 89%;
+            }
+        </style>
+
+ <div class="wrapper">
+    <div class="header">
+     <div class="search-bar">
+      <input type="text" placeholder="Cari artikel disini">
+     </div>
+   <div class="user-settings">
+   </div>
+  </div>
+  <div class="main-container">
+   <div class="main-header anim" style="--delay: 0s">Upload Artikel</div>
+   <div class="main-blogs">
+   <div class="main-container">
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Pembuat</label>
+        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Panji Satria Taqwa Putra Purnama">
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Waktu Upload</label>
+        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Mei 2023">
+      </div>
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Profil Pembuat</label>
+        <input class="form-control" type="file" id="formFile">
+      </div>
+      <div class="mb-3">
+        <label for="formFile" class="form-label"><h6>Upload Artikel!</h6> Document file support code <b>HTML, CSS, PHP, JAVA, JAVASCRIPT, PYTHON</b></label>
+      </div>
+      <div class="main-wrapper">
+        <div class="upload-main-wrapper">
+                <div class="upload-wrapper">
+                        <input type="file" id="upload-file">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid meet" viewBox="224.3881704980842 176.8527621722847 221.13266283524905 178.8472378277154" width="221.13" height="178.85"><defs><path d="M357.38 176.85C386.18 176.85 409.53 204.24 409.53 238.02C409.53 239.29 409.5 240.56 409.42 241.81C430.23 246.95 445.52 264.16 445.52 284.59C445.52 284.59 445.52 284.59 445.52 284.59C445.52 309.08 423.56 328.94 396.47 328.94C384.17 328.94 285.74 328.94 273.44 328.94C246.35 328.94 224.39 309.08 224.39 284.59C224.39 284.59 224.39 284.59 224.39 284.59C224.39 263.24 241.08 245.41 263.31 241.2C265.3 218.05 281.96 199.98 302.22 199.98C306.67 199.98 310.94 200.85 314.93 202.46C324.4 186.96 339.88 176.85 357.38 176.85Z" id="b1aO7LLtdW"></path><path d="M306.46 297.6L339.79 297.6L373.13 297.6L339.79 255.94L306.46 297.6Z" id="c4SXvvMdYD"></path><path d="M350.79 293.05L328.79 293.05L328.79 355.7L350.79 355.7L350.79 293.05Z" id="b11si2zUk"></path></defs><g><g><g><use xlink:href="#b1aO7LLtdW" opacity="1" fill="#ffffff" fill-opacity="1"></use></g><g><g><use xlink:href="#c4SXvvMdYD" opacity="1" fill="#363535" fill-opacity="1"></use></g><g><use xlink:href="#b11si2zUk" opacity="1" fill="#363535" fill-opacity="1"></use></g></g></g></g></svg>
+                        <span class="file-upload-text">Upload File</span>
+                        <div class="file-success-text">
+                         <svg version="1.1" id="check" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 100 100"  xml:space="preserve">
+                <circle style="fill:rgba(0,0,0,0);stroke:#ffffff;stroke-width:10;stroke-miterlimit:10;" cx="49.799" cy="49.746" r="44.757"/>
+                <polyline style="fill:rgba(0,0,0,0);stroke:#ffffff;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;" points="
+                    27.114,51 41.402,65.288 72.485,34.205 "/>
+                </svg> <span>Successfully</span></div>
+                    </div>
+                    <p id="file-upload-name"></p><br><br>
+                    <button type="button" class="btn btn-primary">Kirim</button>
+        </div>
+    </div>
+</div>
+<br>
+</body>
+
+<script>
+     $(document).ready(function(){
+             $('#upload-file').change(function() {
+                var filename = $(this).val();
+                $('#file-upload-name').html(filename);
+                if(filename!=""){
+                    setTimeout(function(){
+                        $('.upload-wrapper').addClass("uploaded");
+                    }, 600);
+                    setTimeout(function(){
+                        $('.upload-wrapper').removeClass("uploaded");
+                        $('.upload-wrapper').addClass("success");
+                    }, 1600);
+                }
+            });
+        });
+</script>
+</html>
